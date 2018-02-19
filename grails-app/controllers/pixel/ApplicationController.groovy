@@ -6,6 +6,7 @@ import javax.annotation.security.PermitAll
 class ApplicationController {
 
     def vehicleService
+    def gasPricesService
 
     def index() {}
 
@@ -48,6 +49,13 @@ class ApplicationController {
             render(contentType: "application/json") {
                 [result: false, errors: serviceResponse.errors]
             }
+        }
+    }
+
+    def getGasPrices(){
+        def result = gasPricesService.getLocalGasPrice(params.zipcode)
+        render(contentType: "application/json"){
+            [result: true, data: result]
         }
     }
 
