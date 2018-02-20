@@ -17,7 +17,7 @@ hibernate {
 
 // environment specific settings
 environments {
-    development {
+    development {my
         dataSource {
             username = "root"
             password = "codeup"
