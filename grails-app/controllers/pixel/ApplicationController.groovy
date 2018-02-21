@@ -1,8 +1,12 @@
 package pixel
 
+import grails.plugin.springsecurity.annotation.Secured
+
 import javax.annotation.security.PermitAll
 
-@PermitAll
+//@PermitAll
+@Secured(['permitAll'])
+
 class ApplicationController {
 
     def vehicleService
