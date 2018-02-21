@@ -57,6 +57,18 @@ grails {
         // escapes all not-encoded output at final stage of outputting
         // filteringCodecForContentType.'text/html' = 'html'
     }
+
+    mail {
+        host = "smtp.gmail.com"
+        port = 465
+        username = "username"
+        password = "password"
+        props = ["mail.smtp.auth":"true",
+                 "mail.smtp.socketFactory.port":"465",
+                 "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                 "mail.smtp.socketFactory.fallback":"false"]
+    }
+
 }
 
 
@@ -138,9 +150,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':        ['permitAll'],
 	'/**/favicon.ico':      ['permitAll'],
     '/dbconsole/**':        ['permitAll'],
+    '/plugins/**':          ['permitAll'],
     '/user/**': 			['ROLE_ADMIN'],
     '/role/**': 			['ROLE_ADMIN'],
     '/securityInfo/**': 	['ROLE_ADMIN'],
     '/registrationCode/**': ['ROLE_ADMIN']
 ]
+
+grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
+
 

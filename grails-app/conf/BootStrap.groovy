@@ -6,8 +6,7 @@ class BootStrap {
 
 //        def adminRole = Role.findOrSaveWhere(authority: "ROLE_ADMIN")
 //
-//        def user = User.findOrSaveWhere(username: "test@gmail.com" , password: "password", firstName: "Test",
-//                lastName: "User", emailAddress: "test@gmail.com" )
+//        def user = User.findOrSaveWhere(username: "test@gmail.com" , password: "password" )
 //
 //        if( !user.authorities.contains(adminRole)){
 //            UserRole.create(user, adminRole, true)
