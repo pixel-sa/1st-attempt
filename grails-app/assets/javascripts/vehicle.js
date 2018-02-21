@@ -39,14 +39,22 @@ $(document).ready(function () {
         if(model !== '' && make !== '' && year !== '') {
             getEngines(model, make, year, function (vehicles) {
                 if (vehicles.length === 1){
-                    //TODO: use this vehicles MPG and continue process
+                    // *** WINNER ***
                     console.log(vehicles[0].combined)
                 }else{
-                    //TODO: select from displacement and if still not to one then select from transmission
-                    populateEngines(vehicles);
+
                     $.each(vehicles, function(i, vehicle){
                         console.log(vehicle)
-                    })
+                    });
+
+                    //TODO: check if comined MPG are the same.. if = then no need to pick from engine sizes
+                    if (checkIfMPGSame(vehicles)){
+                        // ** WINNER **
+                        console.log(vehicles[0].combined)
+                    }else {
+                        //TODO: select from displacement and if still not to one then select from transmission
+                        populateEngines(vehicles);
+                    }
                 }
 
             })
@@ -66,18 +74,37 @@ $(document).ready(function () {
                 }
             });
 
-            if(matchingVehicles > 1){
-                // need to compare these .. if mpg and tranny are = then poof done..
-                console.log(matchingVehicles);
-            }else{
-                //this is the winner
+            if(matchingVehicles.length === 1){
+                // ** WINNER **
                 console.log(matchingVehicles[0].combined);
+            }else{
+                console.log(matchingVehicles);
+                if(checkIfMPGSame(matchingVehicles)){
+                    //** WINNER **
+                    console.log(matchingVehicles[0].combined);
+                }else {
+                    //TODO: check to see what additional field to check to differentiate models.. possible transmission
+                    populateTransmissions(matchingVehicles);
+                }
             }
+        })
+    }
+
+    function bindTransmissionListenerToDom(vehicles) {
+        $("#transmission").on("change", function() {
+            var transmission = $(this).val();
+
+            $.each(vehicles, function(i, vehicle) {
+                if (vehicle.transmission === transmission) {
+                    //**WINNER **
+                    console.log(vehicle.combined);
+                }
+            })
         })
 
     }
 
-
+    <!--  ******** END Event Handlers **********   -->
 
 <!--    ******* HTML Render  ********     -->
 
@@ -117,6 +144,22 @@ $(document).ready(function () {
         bindEngineListenerToDom(vehicles);
     }
 
+    function populateTransmissions(vehicles) {
+        var html = '';
+        html += '<label for="transmission">Transmission</label>';
+        html += '<select name="transmission" id="transmission">';
+        html += '<option value="">Select Transmission</option>';
+
+        $.each(vehicles, function(i, vehicle){
+            html += '<option value"' + vehicle.transmission + '">' + vehicle.transmission + '</option>';
+        });
+
+        html += '</select>';
+        $("#vehicleForm").append(html);
+        bindTransmissionListenerToDom(vehicles);
+    }
+
+    <!--    ******* END HTML Render  ********     -->
 
 <!--  ********  AJAX requests **********   -->
 
@@ -164,5 +207,18 @@ $(document).ready(function () {
         })
     }
 
+    <!--  ******** END AJAX requests **********   -->
+
+    function checkIfMPGSame(vehicles) {
+        var initialVehicleMpg = vehicles[0].combined;
+        var matchingVehicles = [];
+
+        $.each(vehicles, function(i, vehicle) {
+            if(vehicle.combined === initialVehicleMpg) {
+                matchingVehicles.push(vehicle)
+            }
+        });
+        return vehicles.length === matchingVehicles.length
+    }
 
 });
