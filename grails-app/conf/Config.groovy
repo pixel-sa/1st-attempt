@@ -140,6 +140,7 @@ log4j.main = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.via.auth.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.via.auth.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.via.auth.Role'
+grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                    ['permitAll'],
 	'/index':               ['permitAll'],
@@ -149,14 +150,38 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/css/**':           ['permitAll'],
 	'/**/images/**':        ['permitAll'],
 	'/**/favicon.ico':      ['permitAll'],
-    '/dbconsole/**':        ['permitAll'],
-    '/plugins/**':          ['permitAll'],
+    '/dbconsole/**':        ['ROLE_ADMIN'],
+    '/plugins/**':          ['ROLE_USER'],
     '/user/**': 			['ROLE_ADMIN'],
     '/role/**': 			['ROLE_ADMIN'],
     '/securityInfo/**': 	['ROLE_ADMIN'],
     '/registrationCode/**': ['ROLE_ADMIN']
+
+//    '/dbconsole/**':        ['permitAll'],
+//    '/plugins/**':          ['permitAll'],
+//    '/user/**': 			['permitAll'],
+//    '/role/**': 			['permitAll'],
+//    '/securityInfo/**': 	['permitAll'],
+//    '/registrationCode/**': ['permitAll']
 ]
 
-grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
+//grails.plugin.springsecurity.ui.register.postRegisterUrl = '/'
 
+
+
+
+// Added by the Spring Security Core plugin:
+//grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.via.auth.User'
+//grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.via.auth.UserRole'
+//grails.plugin.springsecurity.authority.className = 'com.via.auth.Role'
+//grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+//	'/':                ['permitAll'],
+//	'/index':           ['permitAll'],
+//	'/index.gsp':       ['permitAll'],
+//	'/assets/**':       ['permitAll'],
+//	'/**/js/**':        ['permitAll'],
+//	'/**/css/**':       ['permitAll'],
+//	'/**/images/**':    ['permitAll'],
+//	'/**/favicon.ico':  ['permitAll']
+//]
 
